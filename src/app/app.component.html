@@ -1,0 +1,26 @@
+<h1 class="mat-headline">Chiplist & Autocomplete</h1>
+<h2 class="mat-subheading-1">Enter the colors</h2>
+<mat-form-field>
+	<mat-chip-list #chipList aria-orientation="horizontal">
+		<mat-chip *ngFor="let chip of colors" [selected]="chip.selected ? '': null"
+    [color]="chip.color" [removable]="true" (removed)="remove(chip)">
+			{{chip.name}}
+			<mat-icon matChipRemove aria-hidden="true">cancel</mat-icon>
+		</mat-chip>
+		<input  placeholder=color
+    matChipInput
+    maxlength="1024"
+    matChipInputAddOnBlur="true"
+    [matAutocomplete]="auto"
+    [matChipInputFor]="chipList"
+    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+		(matChipInputTokenEnd)="add($event)" />
+	</mat-chip-list>
+		<mat-autocomplete #auto="matAutocomplete" (optionSelected)="add($event)">
+			<mat-option *ngFor="let chip of availableColors" [value]="chip">
+				{{ chip.name }}
+			</mat-option>
+		</mat-autocomplete>
+</mat-form-field>
+
+<div class="mat-small material-version">@angular/material: {{ version.full }}</div>
